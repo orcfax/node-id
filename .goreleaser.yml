@@ -1,0 +1,35 @@
+project_name: node-id
+builds:
+- env: [CGO_ENABLED=0]
+  goos:
+    - linux
+    - windows
+    - darwin
+    - freebsd
+  ignore:
+  main: ./cmd/node-id/
+archives:
+- name_template: >-
+    {{ .ProjectName }}_{{ .Version }}_
+    {{- title .Os }}_
+    {{- if eq .Arch "amd64" }}x86_64
+    {{- else if eq .Arch "386" }}i386
+    {{- else if eq .Arch "arm64" }}arm64
+    {{- else }}{{ .Arch }}{{ end }}
+  format: binary
+checksum:
+  name_template: 'checksums_sha256.txt'
+  algorithm: sha256
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
+signs:
+  - id: checksum_objects
+    artifacts: checksum
+    args: ["-u", "ross@orcfax.io", "--output", "${signature}", "--detach-sign", "${artifact}"]
+  - id: binary_objects
+    artifacts: binary
+    args: ["-u", "ross@orcfax.io", "--output", "${signature}", "--detach-sign", "${artifact}"]
