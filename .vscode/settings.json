@@ -2,6 +2,9 @@
     "cSpell.words": [
         "appname",
         "goreleaser",
-        "ipinfo"
+        "honnef",
+        "ipinfo",
+        "staticcheck",
+        "unshallow"
     ]
 }
