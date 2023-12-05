@@ -98,6 +98,58 @@ you want an overview of all errors. To run all linters:
 make --ignore-errors lint
 ```
 
+vs. the following which will fail on errors. This isn't necessarily a big deal
+as you will want to resolve those anyway.
+
+```sh
+make lint
+```
+
+### Goreleaser
+
+The `makefile` wraps helpful `goreleaser` commands which help to test the
+output of the code in release-like conditions.
+
+The best way to install goreleaser is via Go with Go installed:
+
+```sh
+go install github.com/goreleaser/goreleaser@latest
+```
+
+More install options are available, see: [goreleaser website][releaser-1]
+
+[releaser-1]: https://goreleaser.com/install/#nur
+
+The quickest way to test locally is to run:
+
+```sh
+make build-local-snapshot
+```
+
+#### Semantic versioning
+
+Goreleaser can be pedantic about how semantic versioning looks in git tags,
+especially for release-candidates which are useful leading up to a release.
+
+Valid semantic versioning looks as follows:
+
+```text
+vMM.mm.pp-rc.n
+```
+
+Where `-rc.n` are the components required for release candidates to be properly
+identified and built.
+
+> NB. If you are unsure at all about how to tag and version releases,take a
+> look at the tag history, e.g. using:
+>
+> ```sh
+> git tag -ln20
+> ```
+>
+> Where the tags will be listed with their repspective tag messages up to
+> 20 characters.
+
 ## Signing
 
 Signing is enabled in the `goreleaser` component but the signing process is
