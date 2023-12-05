@@ -114,7 +114,7 @@ change the command list to add your key-id or email address, e.g. from:
 args: ["--output", "${signature}", "--detach-sign", "${artifact}"]
 ```
 
-<!--markdownlint: disable -->
+<!--markdownlint-disable -->
 
 to:
 
@@ -122,7 +122,7 @@ to:
 args: ["-u", "<key-id or email_addr>", "--output", "${signature}", "--detach-sign", "${artifact}"]
 ```
 
-<!--markdownlint: enable -->
+<!--markdownlint-enable -->
 
 ### Verifying a signature
 
