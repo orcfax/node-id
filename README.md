@@ -207,3 +207,29 @@ gpg:                using RSA key E7274118998A052A32D77FC157B8D1DB7C7C611F
 gpg:                issuer "developer@orcfax.io"
 gpg: BAD signature from "Anon Developer <developer@orcfax.io>" [ultimate]
 ```
+
+## Building private repos
+
+While repositories such as this may eventually be open sourced, the development
+may initially occur behind closed doors. This might, for example, reduce the
+burden felt around API design or versioning, to give two examples.
+
+Repositories can be imported into other golang projects even when private when
+users have access to said repos, e.g. via ssh.
+
+In fact, ssh makes this much easier in today's GitHub ecosystem where ssh is
+now the default mechanism for access.
+
+Git, however, still needs configuring with the following values set in the
+environment (shown as a set of shell commands for convenience).
+
+```sh
+# Enable go to access ssh via git in git config.
+git config --global url.git@github.com:.insteadOf https://github.com/
+# View git changes.
+cat ~/.gitconfig
+# Add organizations or username as comma-separated-values to .bashrc.
+export GOPRIVATE=github.com/orcfax/node-id/*
+# Apply .bashrc changes immediately.
+source ~/.bashrc
+```
