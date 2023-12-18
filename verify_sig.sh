@@ -1,5 +1,8 @@
 #! /usr/bin/bash
 
+# Verify the signatures of the executable files created by the goreleaser
+# package.
+
 echo "verifying signatures, to run manually: 'gpg --verify <path to file>'"
 echo ""
 
