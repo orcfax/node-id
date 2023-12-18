@@ -13,9 +13,7 @@ import (
 // appname is used by goreleaser.
 const appname = "node-id"
 
-// DefaultIDLoc is the location for identity. This can be made
-// configurable at a later date.
-const DefaultIDLoc = "/tmp/.node-identity.json"
+const idLoc = "/tmp/.node-identity.json"
 const timeFormat = "2006-01-02 15:04:05"
 
 var (
@@ -53,14 +51,14 @@ var usage string = fmt.Sprintf(`Usage of %s:
 func listIdentity() {
 	var ident identity.Identity
 	var err error
-	if !identity.Exists(DefaultIDLoc) {
+	if !identity.Exists(idLoc) {
 		log.Println(
 			"identity has not yet being created, please create one and try again",
 		)
 		return
 	}
 	// Load the identity to enable it to be updated.
-	ident, err = identity.LoadCache(DefaultIDLoc)
+	ident, err = identity.LoadCache(idLoc)
 	if err != nil {
 		// In future implementations we need the handshake to
 		// determine whether or not a new identity can just be
@@ -77,13 +75,13 @@ func listIdentity() {
 func outputIdentity(websocket string) error {
 	var ident identity.Identity
 	var err error
-	if !identity.Exists(DefaultIDLoc) {
+	if !identity.Exists(idLoc) {
 		log.Println(
 			"identity has not yet being created, please create one and try again",
 		)
 	}
 	// Load the identity to enable it to be updated.
-	ident, err = identity.LoadCache(DefaultIDLoc)
+	ident, err = identity.LoadCache(idLoc)
 	if err != nil {
 		// In future implementations we need the handshake to
 		// determine whether or not a new identity can just be
@@ -105,8 +103,8 @@ func outputIdentity(websocket string) error {
 	)
 	val, _ := json.MarshalIndent(loc, "", "   ")
 	log.Println(string(val))
-	log.Printf("outputting to: '%s'", DefaultIDLoc)
-	err = os.WriteFile(DefaultIDLoc, val, 0644)
+	log.Printf("outputting to: '%s'", idLoc)
+	err = os.WriteFile(idLoc, val, 0644)
 	return err
 }
 
@@ -124,7 +122,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, "        OPTIONAL: [-version] ...")
 		fmt.Fprintln(os.Stderr, "")
 		fmt.Fprintln(os.Stderr, "Output: [STRING] {collector-identity}")
-		fmt.Fprintf(os.Stderr, "Output: [FILE]   %s\n", DefaultIDLoc)
+		fmt.Fprintf(os.Stderr, "Output: [FILE]   %s\n", idLoc)
 		fmt.Fprintln(os.Stderr, "Output: [STRING] {IP Info Data}")
 		fmt.Fprintf(os.Stderr, "Output: [STRING] '%s ...'\n\n", version)
 		flag.Usage()
