@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/ross-spencer/node-id/pkg/identity"
+	"github.com/orcfax/node-id/pkg/identity"
 )
 
 // appname is used by goreleaser.

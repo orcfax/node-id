@@ -1,4 +1,4 @@
-module github.com/ross-spencer/node-id
+module github.com/orcfax/node-id
 
 go 1.20
 
