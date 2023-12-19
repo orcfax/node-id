@@ -142,7 +142,7 @@ func main() {
 	}
 
 	if websocket == "" {
-		log.Println("please provide a valid websocket value, cannot 'nil'")
+		log.Println("please provide a valid websocket value, cannot be 'nil'")
 		os.Exit(1)
 	}
 	err := outputIdentity(websocket)

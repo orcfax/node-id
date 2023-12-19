@@ -36,7 +36,7 @@ type Identity struct {
 	NodeID             string              `json:"node_id"`
 	Location           IPInfoSimpleSummary `json:"location"`
 	InitializationDate string              `json:"initialization"`
-	ValidatorWebSocket string              `json:"validator_web_socket"`
+	ValidatorWebSocket string              `json:"validator_web_socket,omitempty"`
 }
 
 /*
