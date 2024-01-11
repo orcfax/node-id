@@ -11,7 +11,7 @@ requires calling the app with a URL pointing to an Orcfax validator websocket.
 E.g.
 
 ```sh
-./node-id -ws ws://validator-websocket
+./node-id -ws ws://<validator-websocket>/ws/node
 ```
 
 ## Based on IP Info
