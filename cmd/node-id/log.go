@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"time"
 )
 
@@ -10,11 +11,14 @@ type logWriter struct{}
 
 // Write enables us to format a logging prefix for the application. The
 // text will appear before the log message output by the caller.
+//
+// e.g.
+//
+//	`// 2023-11-27 11:36:57 ERROR :: golang-app:100:main() :: this is an error message, ...some diagnosis`
 func (lw *logWriter) Write(logString []byte) (int, error) {
-	// 2023-11-27 11:36:57 ERROR :: validator_node.py:100:main() :: uvicorn import string not correctly configured: api (No module named 'api')
-	return fmt.Print(
+	return fmt.Fprintf(os.Stderr, "%s :: %s :: %s",
 		time.Now().UTC().Format(timeFormat),
-		fmt.Sprintf(" :: %s :: ", appname),
+		appname,
 		string(logString),
 	)
 }
