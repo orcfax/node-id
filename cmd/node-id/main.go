@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/orcfax/node-id/pkg/identity"
 )
@@ -13,7 +14,7 @@ import (
 // appname is used by goreleaser.
 const appname = "node-id"
 
-const idLoc = "/tmp/.node-identity.json"
+const idName = ".node-identity.json"
 const timeFormat = "2006-01-02 15:04:05"
 
 var (
@@ -47,10 +48,18 @@ var usage string = fmt.Sprintf(`Usage of %s:
   -h, --help prints help information
 `, appname)
 
+// getIdentityLocation retrieves a path to the system's tmp location to
+// enable an identity to be written.
+func getIdentityLocation() string {
+	tmp := os.TempDir()
+	return filepath.Join(tmp, idName)
+}
+
 // listIdentity lists the current identity information.
 func listIdentity() {
 	var ident identity.Identity
 	var err error
+	idLoc := getIdentityLocation()
 	if !identity.Exists(idLoc) {
 		log.Println(
 			"identity has not yet being created, please create one and try again",
@@ -75,6 +84,7 @@ func listIdentity() {
 func outputIdentity(websocket string) error {
 	var ident identity.Identity
 	var err error
+	idLoc := getIdentityLocation()
 	if !identity.Exists(idLoc) {
 		log.Println(
 			"identity has not yet being created, please create one and try again",
@@ -122,7 +132,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, "        OPTIONAL: [-version] ...")
 		fmt.Fprintln(os.Stderr, "")
 		fmt.Fprintln(os.Stderr, "Output: [STRING] {collector-identity}")
-		fmt.Fprintf(os.Stderr, "Output: [FILE]   %s\n", idLoc)
+		fmt.Fprintf(os.Stderr, "Output: [FILE]   %s\n", getIdentityLocation())
 		fmt.Fprintln(os.Stderr, "Output: [STRING] {IP Info Data}")
 		fmt.Fprintf(os.Stderr, "Output: [STRING] '%s ...'\n\n", version)
 		flag.Usage()
